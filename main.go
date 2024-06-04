@@ -28,10 +28,12 @@ func main() {
     CreateProductTable(db)
 
     productToInsert := Product{
-        Name: "Book",
-        Price: 15.55,
-        Available: true,
+        Name: "Toy",
+        Price: 10.25,
+        Available: false,
     }
     var pk int = InsertProduct(db, productToInsert)
-    fmt.Println(pk)
+
+    returnedProduct := SelectProduct(db, pk)
+    fmt.Println(returnedProduct)
 }

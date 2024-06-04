@@ -37,3 +37,21 @@ func InsertProduct(db *sql.DB, product Product) int {
 
     return pk
 }
+
+func SelectProduct(db *sql.DB, pk int) Product {
+    product := Product{}
+
+    query := `
+        select name, price, available from product where id = $1;
+    `
+
+    err := db.QueryRow(query, pk).Scan(&product.Name, &product.Price, &product.Available)
+    if err != nil {
+        if err == sql.ErrNoRows {
+            log.Fatal("No rows found with id: ", pk)
+        }
+        log.Fatal(err)
+    }
+
+    return product
+}
