@@ -2,11 +2,12 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
 
 	"github.com/joho/godotenv"
-    _ "github.com/lib/pq"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -24,22 +25,13 @@ func main() {
         log.Fatal(err)
     }
 
-    createProductTable(db)
-}
+    CreateProductTable(db)
 
-func createProductTable(db *sql.DB) {
-    var query string = `
-        create table if not exists product (
-            id serial primary key,
-            name varchar(100) not null,
-            price numeric(6, 2) not null,
-            available boolean,
-            created_at timestamp default now()
-        )
-    `
-
-    _, err := db.Exec(query)
-    if err != nil {
-        log.Fatal(err)
+    productToInsert := Product{
+        Name: "Book",
+        Price: 15.55,
+        Available: true,
     }
+    var pk int = InsertProduct(db, productToInsert)
+    fmt.Println(pk)
 }
