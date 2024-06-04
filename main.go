@@ -36,4 +36,7 @@ func main() {
 
     returnedProduct := SelectProduct(db, pk)
     fmt.Println(returnedProduct)
+
+    returnedProducts := SelectMultipleProducts(db)
+    fmt.Println(returnedProducts)
 }
